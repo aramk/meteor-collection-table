@@ -1,0 +1,57 @@
+@color-line-1: rgba(0, 0, 0, 0.1);
+@color-highlight: #6ECFF5;
+@color-highlight-light: lighten(@color-highlight, 10%);
+@color-highlight-lighter: lighten(@color-highlight, 20%);
+
+.unselectable {
+  -webkit-user-select: none; /* Chrome/Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+  /* Rules below not implemented in browsers yet */
+  -o-user-select: none;
+  user-select: none;
+}
+
+.collection-table {
+
+  table.selectable {
+    tbody tr {
+      .unselectable;
+      cursor: pointer;
+      &:hover td {
+        background: @color-highlight-lighter !important;
+      }
+      &.selected td {
+        background: @color-highlight-light !important;
+      }
+    }
+  }
+  .ui.menu.toolbar {
+    margin: 0;
+  }
+  .on-selection-show {
+    padding: 0 !important;
+    display: inline-block;
+    .item {
+      float: left;
+    }
+  }
+
+  .toolbar {
+    > .menu {
+      display: inline-block;
+      &.item {
+        padding: 0;
+      }
+    }
+    .item .icon {
+      margin: 0;
+    }
+    .right.menu .item .ui.input {
+      margin-top: -0.85em;
+      margin-bottom: -0.85em;
+      margin-right: -0.25em;
+    }
+  }
+
+}

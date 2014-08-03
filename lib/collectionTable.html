@@ -1,0 +1,20 @@
+<template name="collectionTable">
+  {{#with _settings}}
+  <div class="collection-table">
+    <div class="ui menu toolbar">
+      <div class="crud menu item">
+        <a class="create item"><i class="add icon"></i></a>
+        {{#with ..}}
+        <div class="on-selection-show item" style="{{selectionItemsStyle}}">
+          <a class="edit item"><i class="pencil icon"></i></a>
+          <a class="delete item"><i class="delete icon"></i></a>
+        </div>
+        {{/with}}
+      </div>
+      <div class="right menu item">
+      </div>
+    </div>
+    {{> reactiveTable collection=items settings=tableSettings}}
+  </div>
+  {{/with}}
+</template>

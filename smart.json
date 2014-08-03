@@ -1,0 +1,14 @@
+{
+  "name": "collection-table",
+  "description": "A CRUD table template for displaying collection items in Meteor.",
+  "homepage": "https://github.com/aramk/meteor-collection-table",
+  "author": "Aram Kocharyan (aramk.com)",
+  "version": "0.1.0",
+  "git": "https://github.com/aramk/meteor-collection-table.git",
+  "packages": {
+    "reactive-table": {
+      "git": "https://github.com/aramk/reactive-table",
+      "branch": "feature/selectable"
+    }
+  }
+}
