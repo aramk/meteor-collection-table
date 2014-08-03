@@ -4,13 +4,11 @@ Package.describe({
 });
 
 Package.on_use(function(api) {
-  api.use([
-    'reactive-table'
-  ]);
+  api.use(['templating', 'underscore', 'jquery', 'reactive-table'], 'client');
 
   api.add_files([
-    'collectionTable.js',
-    'collectionTable.html',
-    'collectionTable.less',
+    'lib/collectionTable.html',
+    'lib/collectionTable.js',
+    'lib/collectionTable.less'
   ], 'client');
 });
