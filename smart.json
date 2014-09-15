@@ -10,7 +10,7 @@
       "git": "https://github.com/aramk/reactive-table",
       "branch": "feature/selectable"
     },
-    "meteor-utility": {
+    "utility": {
       "git": "https://github.com/aramk/meteor-utility"
     }
   }
