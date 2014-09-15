@@ -4,7 +4,7 @@ Package.describe({
 });
 
 Package.on_use(function(api) {
-  api.use(['templating', 'underscore', 'jquery', 'less', 'reactive-table'], 'client');
+  api.use(['templating', 'underscore', 'jquery', 'less', 'reactive-table', 'utility'], 'client');
 
   api.add_files([
     'lib/collectionTable.html',
