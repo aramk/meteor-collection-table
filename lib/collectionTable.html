@@ -3,11 +3,11 @@
   <div class="collection-table">
     <div class="ui menu toolbar">
       <div class="crud menu item">
-        <a class="create item"><i class="add icon"></i></a>
+        <a class="create item" title="Create"><i class="add icon"></i></a>
         {{#with ..}}
         <div class="on-selection-show item" style="{{selectionItemsStyle}}">
-          <a class="edit item"><i class="pencil icon"></i></a>
-          <a class="delete item"><i class="delete icon"></i></a>
+          <a class="edit item" title="Edit"><i class="pencil icon"></i></a>
+          <a class="delete item" title="Delete"><i class="delete icon"></i></a>
         </div>
         {{/with}}
       </div>
