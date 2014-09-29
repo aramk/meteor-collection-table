@@ -7,11 +7,11 @@
   "git": "https://github.com/aramk/meteor-collection-table.git",
   "packages": {
     "reactive-table": {
-      "git": "https://github.com/aramk/reactive-table",
+      "git": "https://github.com/aramk/reactive-table.git",
       "branch": "develop"
     },
     "utility": {
-      "git": "https://github.com/aramk/meteor-utility"
+      "git": "https://github.com/aramk/meteor-utility.git"
     }
   }
 }
