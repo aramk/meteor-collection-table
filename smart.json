@@ -8,9 +8,9 @@
   "packages": {
     "reactive-table": {
       "git": "https://github.com/aramk/reactive-table.git",
-      "branch": "develop"
+      "tag": "v0.3.21"
     },
-    "utility": {
+    "aramk:utility": {
       "git": "https://github.com/aramk/meteor-utility.git"
     }
   }
