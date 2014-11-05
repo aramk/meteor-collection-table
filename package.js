@@ -1,5 +1,6 @@
 Package.describe({
   name: 'collection-table',
+  version: '0.1.0',
   summary: 'A CRUD table template for displaying collection items in Meteor.'
 });
 
