@@ -6,11 +6,11 @@
     ],
     [
       "aramk:utility",
-      "0.3.0"
+      "0.4.2"
     ],
     [
       "aslagle:reactive-table",
-      "0.5.6"
+      "0.4.2"
     ],
     [
       "base64",
