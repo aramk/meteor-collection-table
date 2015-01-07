@@ -10,7 +10,7 @@
     ],
     [
       "aramk:utility",
-      "0.4.2"
+      "0.4.3"
     ],
     [
       "aslagle:reactive-table",
@@ -67,6 +67,10 @@
     [
       "minimongo",
       "1.0.5"
+    ],
+    [
+      "natestrauser:font-awesome",
+      "4.2.0"
     ],
     [
       "observe-sequence",
