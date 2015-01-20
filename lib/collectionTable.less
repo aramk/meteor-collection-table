@@ -37,6 +37,12 @@
     }
   }
 
+  table {
+    .checked {
+      width: 40px;
+    }
+  }
+
   .toolbar {
     > .menu {
       display: inline-block;
@@ -54,6 +60,16 @@
       margin-top: -0.85em;
       margin-bottom: -0.85em;
       margin-right: -0.25em;
+    }
+  }
+
+  &.no-crud-menu {
+    .crud.menu {
+      display: none;
+    }
+    .right.menu {
+      float: none;
+      width: 100%;
     }
   }
 
