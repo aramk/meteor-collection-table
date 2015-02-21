@@ -8,7 +8,7 @@ Package.describe({
 Package.on_use(function(api) {
   api.versionsFrom('METEOR@0.9.0');
   api.use(['templating', 'underscore', 'jquery', 'less', 'reactive-var@1.0.3',
-    'aslagle:reactive-table@=0.4.2', 'aramk:utility@0.3.0', 'natestrauser:font-awesome@4.2.0'],
+    'aslagle:reactive-table@=0.4.2', 'aramk:utility@0.6.0', 'pfafman:font-awesome-4@4.3.0'],
     'client');
   api.use(['iron:router@1.0.7'], 'client', {weak: true});
   api.add_files([

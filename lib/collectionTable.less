@@ -13,6 +13,7 @@
 }
 
 .collection-table {
+  position: relative;
 
   table.selectable {
     tbody tr {
@@ -70,6 +71,22 @@
     .right.menu {
       float: none;
       width: 100%;
+    }
+  }
+
+  .overlay {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.75);
+  }
+  &.disabled {
+    .overlay {
+      display: block;
     }
   }
 
