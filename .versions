@@ -1,6 +1,7 @@
 anti:i18n@0.4.3
-aramk:collection-table@0.3.2
-aramk:utility@0.3.0
+aramk:collection-table@0.3.3
+aramk:q@1.0.1_1
+aramk:utility@0.6.0
 aslagle:reactive-table@0.4.2
 base64@1.0.2
 blaze@2.0.4
@@ -18,9 +19,10 @@ less@1.0.12
 meteor@1.1.4
 minifiers@1.1.3
 minimongo@1.0.6
-natestrauser:font-awesome@4.2.0
+mrt:moment@2.8.1
 observe-sequence@1.0.4
 ordered-dict@1.0.2
+pfafman:font-awesome-4@4.3.0
 random@1.0.2
 reactive-var@1.0.4
 spacebars-compiler@1.0.4
