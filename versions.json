@@ -9,8 +9,12 @@
       "1.0.1_1"
     ],
     [
+      "aramk:tinycolor",
+      "1.1.0_1"
+    ],
+    [
       "aramk:utility",
-      "0.4.4"
+      "0.7.0"
     ],
     [
       "aslagle:reactive-table",
@@ -69,8 +73,8 @@
       "1.0.5"
     ],
     [
-      "natestrauser:font-awesome",
-      "4.2.0"
+      "momentjs:moment",
+      "2.9.0"
     ],
     [
       "observe-sequence",
@@ -79,6 +83,10 @@
     [
       "ordered-dict",
       "1.0.1"
+    ],
+    [
+      "pfafman:font-awesome-4",
+      "4.3.0"
     ],
     [
       "random",
