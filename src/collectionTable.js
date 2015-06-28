@@ -116,7 +116,7 @@ function configureSettings(template) {
       throw new Error('Either or both of "items" and "collection" attributes must be provided.');
     }
   } else {
-    collection = Collections.resolve(collection);
+    collection = Collections.get(collection);
   }
   if (!items) {
     items = collection;

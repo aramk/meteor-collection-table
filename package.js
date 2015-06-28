@@ -12,8 +12,8 @@ Package.on_use(function(api) {
     'client');
   api.use(['iron:router@1.0.7'], 'client', {weak: true});
   api.add_files([
-    'lib/collectionTable.html',
-    'lib/collectionTable.js',
-    'lib/collectionTable.less'
+    'src/collectionTable.html',
+    'src/collectionTable.js',
+    'src/collectionTable.less'
   ], 'client');
 });
