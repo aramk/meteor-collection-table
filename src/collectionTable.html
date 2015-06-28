@@ -10,6 +10,11 @@
         </div>
       </div>
       <div class="right menu item">
+        {{#if showFilter}}
+          <div class="ui filter input">
+            {{> reactiveTableFilter id=tableId label="Filter"}}
+          </div>
+        {{/if}}
       </div>
     </div>
     {{> reactiveTable collection=items settings=tableSettings}}

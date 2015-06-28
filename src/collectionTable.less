@@ -57,11 +57,15 @@
     .crud.menu > .item {
       float: left;
     }
-    .right.menu .item .ui.input {
-      margin-top: -0.85em;
-      margin-bottom: -0.85em;
-      margin-right: -0.25em;
+    .right.menu.item {
+      .ui.filter.input {
+        margin: 0.25rem 0.5rem !important;
+      }
     }
+  }
+
+  .ui.toolbar.menu:not(.vertical) .right.menu.item > .input {
+    margin: 0;
   }
 
   &.no-crud-menu {
