@@ -2,21 +2,6 @@ selectedClass = 'selected'
 domNodeField = 'domNodeField'
 selectEventName = 'select'
 TemplateClass = Template.collectionTable
-# Exports
-# We cannot use references alone since they are obfuscated during minification, so we need to
-# name them.
-methods = 
-  getRow: getRow
-  getSelectedRows: getSelectedRows
-  setSelectedIds: setSelectedIds
-  getSelectedIds: getSelectedIds
-  deselectAll: deselectAll
-  toggleSelection: toggleSelection
-  addSelection: addSelection
-  removeSelection: removeSelection
-  getDomNode: getDomNode
-  setDomTableId: setDomTableId
-  getDomTableId: getDomTableId
 
 getNextId = -> Collections.generateId()
 
@@ -153,7 +138,9 @@ configureSettings = (template) ->
   # Legacy support for "sort" property.
   _.each fields, (field) ->
     sort = field.sort
-    if sort? and !field.sortDirection? then field.sortDirection = sort
+    if sort? and !field.sortDirection?
+      field.sortDirection = sort
+      delete field.sort
 
   template.showFilter = settings.showFilter
   # We handle the filter ourselves.
@@ -161,7 +148,21 @@ configureSettings = (template) ->
   settings.filters = [tableId]
   template.settings = settings
 
-_.extend TemplateClass, methods
+# Exports
+# We cannot use references alone since they are obfuscated during minification, so we need to
+# name them.
+_.extend TemplateClass,
+  getRow: getRow
+  getSelectedRows: getSelectedRows
+  setSelectedIds: setSelectedIds
+  getSelectedIds: getSelectedIds
+  deselectAll: deselectAll
+  toggleSelection: toggleSelection
+  addSelection: addSelection
+  removeSelection: removeSelection
+  getDomNode: getDomNode
+  setDomTableId: setDomTableId
+  getDomTableId: getDomTableId
 
 # Template methods.
 
