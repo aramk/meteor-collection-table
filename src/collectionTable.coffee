@@ -171,7 +171,7 @@ TemplateClass.created = ->
   # data._template = this;
   @tableId = getNextId()
   @selectedIds = new ReactiveVar([])
-  configureSettings this
+  configureSettings(@)
 
 TemplateClass.rendered = ->
   template = this
@@ -228,13 +228,18 @@ TemplateClass.rendered = ->
   collection = @collection
   createRoute = @createRoute
   editRoute = @editRoute
-  template.createItem = createItem
-  template.editItem = editItem
-  template.deleteItem = deleteItem
+  @createItem = createItem
+  @editItem = editItem
+  @deleteItem = deleteItem
   if collection
     @autorun ->
       Collections.observe collection, removed: (doc) ->
         removeSelection domNode, [ doc._id ]
+
+  if settings.editOnSelect
+    @autorun =>
+      ids = @selectedIds.get()
+      unless _.isEmpty(ids) then @editItem(ids: ids)
 
 TemplateClass.events
   'click table.selectable tbody tr': (e, template) ->
