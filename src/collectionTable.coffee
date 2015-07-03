@@ -1,7 +1,8 @@
+TemplateClass = Template.collectionTable
 selectedClass = 'selected'
 domNodeField = 'domNodeField'
 selectEventName = 'select'
-TemplateClass = Template.collectionTable
+crudMenuDisableClass = 'no-crud-menu'
 
 getNextId = -> Collections.generateId()
 
@@ -223,7 +224,9 @@ TemplateClass.rendered = ->
   $('tr th', $footer).attr('colspan', colCount).append $nav
   $('tbody', $table).after $footer
   if settings.crudMenu == false
-    $collectionTable.addClass 'no-crud-menu'
+    $collectionTable.addClass crudMenuDisableClass
+  else if settings.crudMenu instanceof ReactiveVar
+    @autorun => $collectionTable.toggleClass crudMenuDisableClass, !settings.crudMenu.get()
   setDomTableId domNode, @tableId
   collection = @collection
   createRoute = @createRoute
