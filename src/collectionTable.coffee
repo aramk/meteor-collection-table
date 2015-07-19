@@ -139,9 +139,10 @@ configureSettings = (template) ->
   # Legacy support for "sort" property.
   _.each fields, (field) ->
     sort = field.sort
+    delete field.sort
     if sort? and !field.sortDirection?
       field.sortDirection = sort
-      delete field.sort
+      field.sortOrder = 0
 
   template.showFilter = settings.showFilter
   # We handle the filter ourselves.
@@ -168,8 +169,6 @@ _.extend TemplateClass,
 # Template methods.
 
 TemplateClass.created = ->
-  # var data = this.data;
-  # data._template = this;
   @tableId = getNextId()
   @selectedIds = new ReactiveVar([])
   configureSettings(@)
