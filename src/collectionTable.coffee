@@ -214,6 +214,9 @@ TemplateClass.rendered = ->
         _.each getSelectedIds(domNode), (id) -> collection.remove id
 
   @$('.ui.filter.input .input-group-addon').replaceWith('<i class="filter icon"></i>')
+  @$('input.form-control').each ->
+    $em = $(@)
+    unless $em.parent().hasClass('ui input') then $em.wrap('<div class="ui input"></div>')
   $nav = @$('.reactive-table-navigation')
   $footer = $('<tfoot><tr><th></th></tr></tfoot>')
   colCount = $('tr:first th', $table).length
