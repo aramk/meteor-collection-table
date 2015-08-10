@@ -2,6 +2,8 @@
 
 A CRUD table template for displaying collection items in Meteor. Extends [aslagle:reactive-table](https://github.com/aslagle/reactive-table) and uses [iron:router](https://github.com/iron-meteor/iron-router).
 
+[Demo App](https://github.com/aramk/meteor-sandbox).
+
 ## Features
 
 * CRUD buttons (Add, Edit, Remove) with custom behaviour.
