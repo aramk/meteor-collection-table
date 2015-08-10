@@ -6,7 +6,7 @@ A CRUD table template for displaying collection items in Meteor. Extends [aslagl
 
 ## Features
 
-* CRUD buttons (Add, Edit, Remove) with custom behaviour.
+* CRUD buttons (Create, Edit, Delete) with custom behaviour.
 * Selection
 * Checkboxes
 
