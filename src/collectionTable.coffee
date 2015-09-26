@@ -1,4 +1,5 @@
-TemplateClass = Template.collectionTable
+templateName = 'collectionTable'
+TemplateClass = Template[templateName]
 selectedClass = 'selected'
 domNodeField = 'domNodeField'
 selectEventName = 'select'
@@ -73,11 +74,17 @@ getDomNode = (template) ->
     throw new Error('No template provided')
   template.find '.collection-table'
 
-getTemplate = (domNode) ->
-  if !domNode
-    throw new Error('No domNode provided')
-  domNode = $(domNode)[0]
-  Blaze.getView(domNode).templateInstance()
+getTemplate = (arg) ->
+  if arg instanceof Blaze.TemplateInstance
+    template = arg
+  else
+    element = $(arg)[0]
+    if element
+      return Blaze.getView(element).templateInstance()
+  try
+    Templates.getNamedInstance(templateName, template)
+  catch err
+    throw new Error('No element provided')
 
 getSettings = (domNode) -> getTemplate(domNode).settings
 
@@ -119,7 +126,7 @@ configureSettings = (template) ->
     group: tableId
     rowsPerPage: 10
     showFilter: true
-  }, Setter.clone(data.settings))
+  }, Setter.clone(data.settings, shallow: true))
   fields = settings.fields = settings.fields or []
   checkbox = settings.checkbox
   if checkbox
@@ -169,7 +176,8 @@ _.extend TemplateClass,
 # Template methods.
 
 TemplateClass.created = ->
-  @tableId = getNextId()
+  settings = @data.settings ?= {}
+  @tableId = settings.id ? getNextId()
   @selectedIds = new ReactiveVar([])
   configureSettings(@)
 
@@ -177,7 +185,7 @@ TemplateClass.rendered = ->
   template = this
   data = @data
   domNode = getDomNode(this)
-  settings = data.settings
+  settings = getSettings()
   $table = $(@$('.reactive-table')).addClass('ui selectable table segment')
   $collectionTable = @$('.collection-table')
 
