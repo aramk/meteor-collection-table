@@ -284,10 +284,10 @@ TemplateClass.events
     e.stopPropagation()
 
 TemplateClass.helpers
-  selectionItemsStyle: ->
+  selectedClass: ->
     template = Template.instance()
     selectedIds = template.selectedIds.get()
-    if selectedIds.length > 0 then '' else 'display: none'
+    if selectedIds.length > 0 then 'selected'
   items: -> Template.instance().items
   tableId: -> Template.instance().tableId
   tableSettings: -> Template.instance().settings
