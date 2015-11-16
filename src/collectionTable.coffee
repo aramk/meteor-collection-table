@@ -139,7 +139,7 @@ configureSettings = (template) ->
           value = getValue(object)
         checked = if value then 'checked' else ''
         html = '<input type="checkbox" ' + checked + ' />'
-        new (Spacebars.SafeString)(html)
+        Spacebars.SafeString(html)
     if Types.isObject(checkbox.field)
       _.extend checkboxField, checkbox.field
     fields.unshift checkboxField
