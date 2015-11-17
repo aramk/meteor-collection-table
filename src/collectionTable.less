@@ -32,9 +32,14 @@
   }
   .on-selection-show {
     padding: 0 !important;
-    display: inline-block;
+    display: none !important;
     .item {
       float: left;
+    }
+  }
+  &.selected {
+    .on-selection-show {
+      display: inline-block !important;
     }
   }
 
@@ -81,7 +86,6 @@
     }
     .right.menu {
       float: none;
-      width: 100%;
     }
   }
 
