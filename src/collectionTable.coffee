@@ -127,10 +127,12 @@ configureSettings = (template) ->
     rowsPerPage: 10
     showFilter: true
   }, Setter.clone(data.settings, shallow: true))
+  # Pass items instead of the actual collection to allow using cursors and arrays.
+  settings.collection = items
   fields = settings.fields = settings.fields or []
   checkbox = settings.checkbox
   if checkbox
-    checkboxField = 
+    checkboxField =
       key: 'checked'
       label: ''
       fn: (value, object) ->
@@ -253,6 +255,9 @@ TemplateClass.rendered = ->
 
 TemplateClass.events
   'click table.selectable tbody tr': (e, template) ->
+    # Prevent clicks on inputs from selecting the row.
+    return if $(e.target).is('input')
+    
     data = template.data
     domNode = getDomNode(template)
     id = @_id
@@ -263,7 +268,7 @@ TemplateClass.events
     id = @_id
     template.editItem
       event: e
-      ids: [ id ]
+      ids: [id]
       model: this
   'click .create.item': (e, template) -> template.createItem()
   'click .edit.item': (e, template) -> template.editItem event: e
@@ -279,9 +284,6 @@ TemplateClass.events
         $checkbox: $checkbox
         data: data
         checked: $checkbox.is(':checked')
-  'click [type="checkbox"]': (e, template) ->
-    # Prevent the check from being considered as a click event on the row.
-    e.stopPropagation()
 
 TemplateClass.helpers
   selectedClass: ->
