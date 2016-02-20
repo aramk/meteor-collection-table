@@ -14,7 +14,7 @@ Package.on_use(function(api) {
     'jquery',
     'less',
     'reactive-var@1.0.3',
-    'aslagle:reactive-table@=0.8.1',
+    'aslagle:reactive-table@0.8.1',
     'aramk:utility@0.6.0'
   ], 'client');
   api.use(['iron:router@1.0.7'], 'client', {weak: true});
