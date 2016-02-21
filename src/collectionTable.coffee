@@ -92,6 +92,14 @@ setDomTableId = (domNode, id) -> $(domNode).data(domNodeField, id)
 
 getDomTableId = (domNode) -> $(domNode).data domNodeField
 
+createCheckbox = (value, object, checkbox) ->
+  getValue = checkbox?.getValue
+  if getValue
+    value = getValue(object)
+  checked = if value then 'checked' else ''
+  html = '<input type="checkbox" ' + checked + ' />'
+  Spacebars.SafeString(html)
+
 configureSettings = (template) ->
   data = template.data
   items = data.items
@@ -135,13 +143,7 @@ configureSettings = (template) ->
     checkboxField =
       key: 'checked'
       label: ''
-      fn: (value, object) ->
-        getValue = checkbox.getValue
-        if getValue
-          value = getValue(object)
-        checked = if value then 'checked' else ''
-        html = '<input type="checkbox" ' + checked + ' />'
-        Spacebars.SafeString(html)
+      fn: (value, object) -> createCheckbox(value, object, checkbox)
     if Types.isObject(checkbox.field)
       _.extend checkboxField, checkbox.field
     fields.unshift checkboxField
@@ -174,6 +176,7 @@ _.extend TemplateClass,
   getDomNode: getDomNode
   setDomTableId: setDomTableId
   getDomTableId: getDomTableId
+  createCheckbox: createCheckbox
 
 # Template methods.
 
@@ -188,7 +191,7 @@ TemplateClass.rendered = ->
   data = @data
   domNode = getDomNode(this)
   settings = getSettings()
-  $table = $(@$('.reactive-table')).addClass('ui selectable table segment')
+  $table = $(@$('.reactive-table')).addClass('ui selectable table segment ' + (settings.cls ? ''))
   $collectionTable = @$('.collection-table')
 
   createHandlerContext = (extraArgs) ->
