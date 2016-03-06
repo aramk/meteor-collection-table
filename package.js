@@ -20,6 +20,7 @@ Package.on_use(function(api) {
   api.use(['iron:router@1.0.7'], 'client', {weak: true});
   api.add_files([
     'src/collectionTable.html',
+    'src/jquery-doubletap.js',
     'src/collectionTable.coffee',
     'src/collectionTable.less'
   ], 'client');

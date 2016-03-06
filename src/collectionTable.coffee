@@ -256,6 +256,16 @@ TemplateClass.rendered = ->
       ids = @selectedIds.get()
       unless _.isEmpty(ids) then @editItem(ids: ids)
 
+  # Bind double tap in place of double click for touch devices.
+  $collectionTable.doubletap (e) ->
+    tr = if $(e.target).is('tr') then e.target else $(e.target).closest('tr')[0]
+    return unless tr
+    data = Blaze.getData(tr)
+    template.editItem
+      event: e
+      ids: [data._id]
+      model: data
+
 TemplateClass.events
   'click table.selectable tbody tr': (e, template) ->
     # Prevent clicks on inputs from selecting the row.
