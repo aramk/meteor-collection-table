@@ -15,7 +15,8 @@ Package.on_use(function(api) {
     'less',
     'reactive-var@1.0.3',
     'aslagle:reactive-table@0.8.1',
-    'urbanetic:utility@1.0.0'
+    'urbanetic:utility@1.0.0',
+    'matb33:collection-hooks@0.8.0'
   ], 'client');
   api.use(['iron:router@1.0.7'], 'client', {weak: true});
   api.add_files([

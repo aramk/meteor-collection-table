@@ -247,9 +247,7 @@ TemplateClass.rendered = ->
   @editItem = editItem
   @deleteItem = deleteItem
   if collection
-    @autorun ->
-      Collections.observe collection, removed: (doc) ->
-        removeSelection domNode, [ doc._id ]
+    @autorun -> collection.after.remove (userId, doc) -> removeSelection domNode, [doc._id]
 
   if settings.editOnSelect
     @autorun =>
