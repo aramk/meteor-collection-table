@@ -184,6 +184,7 @@ TemplateClass.created = ->
   settings = @data.settings ?= {}
   @tableId = settings.id ? getNextId()
   @selectedIds = new ReactiveVar([])
+  @collectionHookHandles = []
   configureSettings(@)
 
 TemplateClass.rendered = ->
@@ -247,7 +248,9 @@ TemplateClass.rendered = ->
   @editItem = editItem
   @deleteItem = deleteItem
   if collection
-    @autorun -> collection.after.remove (userId, doc) -> removeSelection domNode, [doc._id]
+    @autorun =>
+      @collectionHookHandles.push collection.after.remove (userId, doc) ->
+        removeSelection domNode, [doc._id]
 
   if settings.editOnSelect
     @autorun =>
@@ -263,6 +266,9 @@ TemplateClass.rendered = ->
       event: e
       ids: [data._id]
       model: data
+
+TemplateClass.destroyed = ->
+  _.each @collectionHookHandles, (handle) -> handle.remove()
 
 TemplateClass.events
   'click table.selectable tbody tr': (e, template) ->
