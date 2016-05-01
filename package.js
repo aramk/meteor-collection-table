@@ -1,12 +1,12 @@
 Package.describe({
   name: 'aramk:collection-table',
-  version: '0.4.0',
+  version: '0.4.1',
   summary: 'A CRUD table template for displaying collection items in Meteor.',
   git: 'https://github.com/aramk/meteor-collection-table.git'
 });
 
 Package.on_use(function(api) {
-  api.versionsFrom('METEOR@0.9.0');
+  api.versionsFrom('METEOR@1.2.0.1');
   api.use([
     'coffeescript',
     'templating',
