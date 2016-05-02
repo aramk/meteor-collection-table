@@ -13,10 +13,6 @@
       "1.1.0_1"
     ],
     [
-      "aramk:utility",
-      "0.7.0"
-    ],
-    [
       "aslagle:reactive-table",
       "0.4.2"
     ],
