@@ -32,15 +32,21 @@
   }
   .on-selection-show {
     padding: 0 !important;
-    display: inline-block;
+    display: none !important;
     .item {
       float: left;
+    }
+  }
+  &.selected {
+    .on-selection-show {
+      display: inline-block !important;
     }
   }
 
   table {
     .checked {
-      width: 40px;
+      width: 1.5rem;
+      padding-right: 0 !important;
     }
   }
 
@@ -81,7 +87,6 @@
     }
     .right.menu {
       float: none;
-      width: 100%;
     }
   }
 

@@ -92,6 +92,14 @@ setDomTableId = (domNode, id) -> $(domNode).data(domNodeField, id)
 
 getDomTableId = (domNode) -> $(domNode).data domNodeField
 
+createCheckbox = (value, object, checkbox) ->
+  getValue = checkbox?.getValue
+  if getValue
+    value = getValue(object)
+  checked = if value then 'checked' else ''
+  html = '<input type="checkbox" ' + checked + ' />'
+  Spacebars.SafeString(html)
+
 configureSettings = (template) ->
   data = template.data
   items = data.items
@@ -127,19 +135,15 @@ configureSettings = (template) ->
     rowsPerPage: 10
     showFilter: true
   }, Setter.clone(data.settings, shallow: true))
+  # Pass items instead of the actual collection to allow using cursors and arrays.
+  settings.collection = items
   fields = settings.fields = settings.fields or []
   checkbox = settings.checkbox
   if checkbox
-    checkboxField = 
+    checkboxField =
       key: 'checked'
       label: ''
-      fn: (value, object) ->
-        getValue = checkbox.getValue
-        if getValue
-          value = getValue(object)
-        checked = if value then 'checked' else ''
-        html = '<input type="checkbox" ' + checked + ' />'
-        new (Spacebars.SafeString)(html)
+      fn: (value, object) -> createCheckbox(value, object, checkbox)
     if Types.isObject(checkbox.field)
       _.extend checkboxField, checkbox.field
     fields.unshift checkboxField
@@ -172,6 +176,7 @@ _.extend TemplateClass,
   getDomNode: getDomNode
   setDomTableId: setDomTableId
   getDomTableId: getDomTableId
+  createCheckbox: createCheckbox
 
 # Template methods.
 
@@ -179,6 +184,7 @@ TemplateClass.created = ->
   settings = @data.settings ?= {}
   @tableId = settings.id ? getNextId()
   @selectedIds = new ReactiveVar([])
+  @collectionHookHandles = []
   configureSettings(@)
 
 TemplateClass.rendered = ->
@@ -186,7 +192,7 @@ TemplateClass.rendered = ->
   data = @data
   domNode = getDomNode(this)
   settings = getSettings()
-  $table = $(@$('.reactive-table')).addClass('ui selectable table segment')
+  $table = $(@$('.reactive-table')).addClass('ui selectable table segment ' + (settings.cls ? ''))
   $collectionTable = @$('.collection-table')
 
   createHandlerContext = (extraArgs) ->
@@ -242,17 +248,33 @@ TemplateClass.rendered = ->
   @editItem = editItem
   @deleteItem = deleteItem
   if collection
-    @autorun ->
-      Collections.observe collection, removed: (doc) ->
-        removeSelection domNode, [ doc._id ]
+    @autorun =>
+      @collectionHookHandles.push collection.after.remove (userId, doc) ->
+        removeSelection domNode, [doc._id]
 
   if settings.editOnSelect
     @autorun =>
       ids = @selectedIds.get()
       unless _.isEmpty(ids) then @editItem(ids: ids)
 
+  # Bind double tap in place of double click for touch devices.
+  $collectionTable.doubletap (e) ->
+    tr = if $(e.target).is('tr') then e.target else $(e.target).closest('tr')[0]
+    return unless tr
+    data = Blaze.getData(tr)
+    template.editItem
+      event: e
+      ids: [data._id]
+      model: data
+
+TemplateClass.destroyed = ->
+  _.each @collectionHookHandles, (handle) -> handle.remove()
+
 TemplateClass.events
   'click table.selectable tbody tr': (e, template) ->
+    # Prevent clicks on inputs from selecting the row.
+    return if $(e.target).is('input')
+    
     data = template.data
     domNode = getDomNode(template)
     id = @_id
@@ -263,7 +285,7 @@ TemplateClass.events
     id = @_id
     template.editItem
       event: e
-      ids: [ id ]
+      ids: [id]
       model: this
   'click .create.item': (e, template) -> template.createItem()
   'click .edit.item': (e, template) -> template.editItem event: e
@@ -279,15 +301,12 @@ TemplateClass.events
         $checkbox: $checkbox
         data: data
         checked: $checkbox.is(':checked')
-  'click [type="checkbox"]': (e, template) ->
-    # Prevent the check from being considered as a click event on the row.
-    e.stopPropagation()
 
 TemplateClass.helpers
-  selectionItemsStyle: ->
+  selectedClass: ->
     template = Template.instance()
     selectedIds = template.selectedIds.get()
-    if selectedIds.length > 0 then '' else 'display: none'
+    if selectedIds.length > 0 then 'selected'
   items: -> Template.instance().items
   tableId: -> Template.instance().tableId
   tableSettings: -> Template.instance().settings

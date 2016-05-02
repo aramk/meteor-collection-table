@@ -1,10 +1,10 @@
 <template name="collectionTable">
-  <div class="collection-table">
+  <div class="collection-table {{name}} {{selectedClass}}">
     <div class="overlay"></div>
     <div class="ui menu toolbar">
       <div class="crud menu item">
         <a class="create item" title="Create"><i class="add icon"></i></a>
-        <div class="on-selection-show item menu" style="{{selectionItemsStyle}}">
+        <div class="on-selection-show item menu">
           <a class="edit item" title="Edit"><i class="pencil icon"></i></a>
           <a class="delete item" title="Delete"><i class="delete icon"></i></a>
         </div>
@@ -17,6 +17,6 @@
         {{/if}}
       </div>
     </div>
-    {{> reactiveTable collection=items settings=tableSettings}}
+    {{> reactiveTable settings=tableSettings}}
   </div>
 </template>

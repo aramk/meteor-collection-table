@@ -1,12 +1,12 @@
 Package.describe({
   name: 'aramk:collection-table',
-  version: '0.4.0',
+  version: '0.5.0',
   summary: 'A CRUD table template for displaying collection items in Meteor.',
   git: 'https://github.com/aramk/meteor-collection-table.git'
 });
 
 Package.on_use(function(api) {
-  api.versionsFrom('METEOR@0.9.0');
+  api.versionsFrom('METEOR@1.2.0.1');
   api.use([
     'coffeescript',
     'templating',
@@ -14,12 +14,14 @@ Package.on_use(function(api) {
     'jquery',
     'less',
     'reactive-var@1.0.3',
-    'aslagle:reactive-table@=0.8.1',
-    'aramk:utility@0.6.0'
+    'aslagle:reactive-table@0.8.1',
+    'urbanetic:utility@1.2.0',
+    'matb33:collection-hooks@0.8.0'
   ], 'client');
   api.use(['iron:router@1.0.7'], 'client', {weak: true});
   api.add_files([
     'src/collectionTable.html',
+    'src/jquery-doubletap.js',
     'src/collectionTable.coffee',
     'src/collectionTable.less'
   ], 'client');
