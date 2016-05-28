@@ -13,15 +13,15 @@ Package.on_use(function(api) {
     'underscore',
     'jquery',
     'less',
-    'reactive-var@1.0.3',
+    'aramk:jquery-doubletap@0.1.0',
     'aslagle:reactive-table@0.8.1',
-    'urbanetic:utility@1.2.0',
-    'matb33:collection-hooks@0.8.0'
+    'matb33:collection-hooks@0.8.0',
+    'reactive-var@1.0.3',
+    'urbanetic:utility@1.2.0'
   ], 'client');
   api.use(['iron:router@1.0.7'], 'client', {weak: true});
   api.add_files([
     'src/collectionTable.html',
-    'src/jquery-doubletap.js',
     'src/collectionTable.coffee',
     'src/collectionTable.less'
   ], 'client');
