@@ -19,7 +19,7 @@ Package.on_use(function(api) {
     'reactive-var@1.0.3',
     'urbanetic:utility@1.2.0'
   ], 'client');
-  api.use(['iron:router@1.0.7'], 'client', {weak: true});
+  api.use(['iron:router@1.0.13'], 'client', {weak: true});
   api.add_files([
     'src/collectionTable.html',
     'src/collectionTable.coffee',
