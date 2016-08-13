@@ -14,7 +14,7 @@ Package.on_use(function(api) {
     'jquery',
     'less',
     'aramk:jquery-doubletap@0.1.0',
-    'aslagle:reactive-table@0.8.1',
+    'aslagle:reactive-table@0.8.34',
     'matb33:collection-hooks@0.8.0',
     'reactive-var@1.0.3',
     'urbanetic:utility@1.2.0'
