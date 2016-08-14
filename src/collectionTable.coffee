@@ -102,30 +102,31 @@ createCheckbox = (value, object, checkbox) ->
 
 configureSettings = (template) ->
   data = template.data
-  items = data.items
-  collection = data.collection
-  if !collection
-    if items
-      collection = Collections.get(items)
+  unless data.settings?.collection?
+    items = data.items
+    collection = data.collection
+    unless collection
+      if items
+        collection = Collections.get(items)
+      else
+        throw new Error('Either or both of "items" and "collection" attributes must be provided.')
     else
-      throw new Error('Either or both of "items" and "collection" attributes must be provided.')
-  else
-    collection = Collections.get(collection)
-  if !items
-    items = collection
-  # Store them for use in helpers.
-  template.items = items
-  template.collection = collection
-  if !collection
-    console.warn 'No collection provided.', data
-  else
-    collectionName = data.collectionName or Collections.getName(collection)
-    if collectionName
-      collectionId = Strings.firstToLowerCase(Strings.singular(collectionName))
-      template.createRoute = data.createRoute or collectionId + 'Create'
-      template.editRoute = data.editRoute or collectionId + 'Edit'
+      collection = Collections.get(collection)
+    unless items
+      items = collection
+    # Store them for use in helpers.
+    template.items = items
+    template.collection = collection
+    unless collection
+      console.warn 'No collection provided.', data
     else
-      console.warn 'No collection name provided', data
+      collectionName = data.collectionName or Collections.getName(collection)
+      if collectionName
+        collectionId = Strings.firstToLowerCase(Strings.singular(collectionName))
+        template.createRoute = data.createRoute or collectionId + 'Create'
+        template.editRoute = data.editRoute or collectionId + 'Edit'
+      else
+        console.warn 'No collection name provided', data
 
   tableId = template.tableId
   # Clone settings to ensure the original isn't modified in case it's used across different table
@@ -136,7 +137,7 @@ configureSettings = (template) ->
     showFilter: true
   }, Setter.clone(data.settings, shallow: true))
   # Pass items instead of the actual collection to allow using cursors and arrays.
-  settings.collection = items
+  settings.collection ?= items
   fields = settings.fields = settings.fields or []
   checkbox = settings.checkbox
   if checkbox
@@ -188,11 +189,19 @@ TemplateClass.created = ->
   configureSettings(@)
 
 TemplateClass.rendered = ->
-  template = this
+  @tableInterval = setInterval =>
+    if @$('.reactive-table').length > 0
+      clearInterval(@tableInterval)
+      onTableRender.call(@)
+  , 100
+  
+onTableRender = ->
+  template = @
   data = @data
-  domNode = getDomNode(this)
-  settings = getSettings()
-  $table = $(@$('.reactive-table')).addClass('ui selectable table segment ' + (settings.cls ? ''))
+  domNode = getDomNode(@)
+  settings = getSettings(@)
+
+  $table = @$('.reactive-table').addClass('ui selectable table segment ' + (settings.cls ? ''))
   $collectionTable = @$('.collection-table')
 
   createHandlerContext = (extraArgs) ->
@@ -269,6 +278,7 @@ TemplateClass.rendered = ->
 
 TemplateClass.destroyed = ->
   _.each @collectionHookHandles, (handle) -> handle.remove()
+  clearInterval(@tableInterval)
 
 TemplateClass.events
   'click table.selectable tbody tr': (e, template) ->
