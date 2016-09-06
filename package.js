@@ -14,13 +14,16 @@ Package.on_use(function(api) {
     'jquery',
     'less',
     'aramk:jquery-doubletap@0.1.0',
-    'aslagle:reactive-table@0.8.1',
     'matb33:collection-hooks@0.8.0',
     'reactive-var@1.0.3',
     'urbanetic:utility@1.2.0'
   ], 'client');
   api.use(['iron:router@1.0.13'], 'client', {weak: true});
-  api.add_files([
+  api.use([
+    'aslagle:reactive-table@0.8.1'
+  ], ['client', 'server']);
+  api.imply(['aslagle:reactive-table'], ['client', 'server']);
+  api.addFiles([
     'src/collectionTable.html',
     'src/collectionTable.coffee',
     'src/collectionTable.less'
