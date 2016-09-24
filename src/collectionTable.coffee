@@ -102,43 +102,48 @@ createCheckbox = (value, object, checkbox) ->
 
 configureSettings = (template) ->
   data = template.data
-  unless data.settings?.collection?
-    items = data.items
-    collection = data.collection
-    unless collection
-      if items
-        collection = Collections.get(items)
-      else
-        throw new Error('Either or both of "items" and "collection" attributes must be provided.')
-    else
-      collection = Collections.get(collection)
-    unless items
-      items = collection
-    # Store them for use in helpers.
-    template.items = items
-    template.collection = collection
-    unless collection
-      console.warn 'No collection provided.', data
-    else
-      collectionName = data.collectionName or Collections.getName(collection)
-      if collectionName
-        collectionId = Strings.firstToLowerCase(Strings.singular(collectionName))
-        template.createRoute = data.createRoute or collectionId + 'Create'
-        template.editRoute = data.editRoute or collectionId + 'Edit'
-      else
-        console.warn 'No collection name provided', data
 
-  tableId = template.tableId
   # Clone settings to ensure the original isn't modified in case it's used across different table
   # instances.
-  settings = Setter.merge({
+  settings = _.extend(_.omit(data, 'settings'), Setter.clone(data.settings, shallow: true))
+  tableId = template.tableId = settings.id ? getNextId()
+  _.defaults settings,
     group: tableId
     rowsPerPage: 10
     showFilter: true
-  }, Setter.clone(data.settings, shallow: true))
+  template.settings = settings
+
+  template.createRoute = settings.createRoute
+  template.editRoute = settings.editRoute
+
+  items = settings.items
+  collection = settings.collection
+  unless collection
+    if items
+      collection = Collections.get(items)
+    else
+      throw new Error('Either or both of "items" and "collection" attributes must be provided.')
+  else
+    collection = Collections.get(collection)
+  unless items
+    items = collection
+  unless collection
+    console.warn 'No collection provided.', data
+  else
+    collectionName = settings.collectionName ? Collections.getName(collection)
+    if collectionName
+      collectionId = Strings.firstToLowerCase(Strings.singular(collectionName))
+      template.createRoute ?= collectionId + 'Create'
+      template.editRoute ?= collectionId + 'Edit'
+    else
+      console.warn 'No collection name provided', data
+
+  template.items = items
+  template.collection = collection
+
   # Pass items instead of the actual collection to allow using cursors and arrays.
-  settings.collection ?= items
-  fields = settings.fields = settings.fields or []
+  settings.collection = settings.serverCollection ? collection ? items
+  fields = settings.fields = settings.fields ? []
   checkbox = settings.checkbox
   if checkbox
     checkboxField =
@@ -160,7 +165,6 @@ configureSettings = (template) ->
   # We handle the filter ourselves.
   settings.showFilter = false
   settings.filters = [tableId]
-  template.settings = settings
 
 # Exports
 # We cannot use references alone since they are obfuscated during minification, so we need to
@@ -182,8 +186,6 @@ _.extend TemplateClass,
 # Template methods.
 
 TemplateClass.created = ->
-  settings = @data.settings ?= {}
-  @tableId = settings.id ? getNextId()
   @selectedIds = new ReactiveVar([])
   @collectionHookHandles = []
   configureSettings(@)
@@ -221,7 +223,7 @@ onTableRender = ->
 
   editItem = (args) ->
     defaultHandler = ->
-      ids = args.ids or getSelectedIds(domNode)
+      ids = args.ids ? getSelectedIds(domNode)
       id = ids[0]
       typeof Router != 'undefined' and Router.go(editRoute, _id: id)
     if settings.onEdit
@@ -301,7 +303,7 @@ TemplateClass.events
   'click .edit.item': (e, template) -> template.editItem event: e
   'click .delete.item': (e, template) -> template.deleteItem()
   'change [type="checkbox"]': (e, template) ->
-    settings = template.data.settings
+    settings = template.settings
     if settings.checkbox
       $checkbox = $(e.currentTarget)
       data = Blaze.getData($checkbox.parent().parent()[0])
