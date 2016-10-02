@@ -142,7 +142,7 @@ configureSettings = (template) ->
   template.collection = collection
 
   # Pass items instead of the actual collection to allow using cursors and arrays.
-  settings.collection = settings.serverCollection ? collection ? items
+  settings.collection = items ? settings.serverCollection ? collection
   fields = settings.fields = settings.fields ? []
   checkbox = settings.checkbox
   if checkbox
