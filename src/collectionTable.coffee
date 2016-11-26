@@ -236,7 +236,9 @@ onTableRender = ->
       if settings.onDelete
         settings.onDelete createHandlerContext()
       else
-        _.each getSelectedIds(domNode), (id) -> collection.remove id
+        _.each getSelectedIds(domNode), (id) ->
+          collection.remove id, (err, result) ->
+            if err then Logger.error(err)
 
   @$('.ui.filter.input .input-group-addon').replaceWith('<i class="filter icon"></i>')
   @$('input.form-control').each ->
