@@ -166,6 +166,12 @@ configureSettings = (template) ->
   settings.showFilter = false
   settings.filters = [tableId]
 
+  # Restore the page number when revisiting the table.
+  if settings.id
+    currentPageSessionName = "collection-table-current-page-#{settings.id}"
+    settings.currentPage = new ReactiveVar(Session.get(currentPageSessionName) || 0);
+    Templates.bindVarToSession settings.currentPage, currentPageSessionName, template: template
+
 # Exports
 # We cannot use references alone since they are obfuscated during minification, so we need to
 # name them.
