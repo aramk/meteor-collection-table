@@ -118,16 +118,17 @@ configureSettings = (template) ->
 
   items = settings.items
   collection = settings.collection
+  serverCollection = settings.serverCollection
   unless collection
     if items
       collection = Collections.get(items)
-    else
+    else unless serverCollection
       throw new Error('Either or both of "items" and "collection" attributes must be provided.')
   else
     collection = Collections.get(collection)
   unless items
     items = collection
-  unless collection
+  unless collection or serverCollection
     console.warn 'No collection provided.', data
   else
     collectionName = settings.collectionName ? Collections.getName(collection)
@@ -142,7 +143,8 @@ configureSettings = (template) ->
   template.collection = collection
 
   # Pass items instead of the actual collection to allow using cursors and arrays.
-  settings.collection = items ? settings.serverCollection ? collection
+  settings.collection = if settings.items? then items else serverCollection ? collection
+  console.log('>>> settings', settings)
   fields = settings.fields = settings.fields ? []
   checkbox = settings.checkbox
   if checkbox
