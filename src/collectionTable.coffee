@@ -144,7 +144,6 @@ configureSettings = (template) ->
 
   # Pass items instead of the actual collection to allow using cursors and arrays.
   settings.collection = if settings.items? then items else serverCollection ? collection
-  console.log('>>> settings', settings)
   fields = settings.fields = settings.fields ? []
   checkbox = settings.checkbox
   if checkbox
