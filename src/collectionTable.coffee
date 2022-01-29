@@ -4,6 +4,7 @@ selectedClass = 'selected'
 domNodeField = 'domNodeField'
 selectEventName = 'select'
 crudMenuDisableClass = 'no-crud-menu'
+toolbarDisableClass = 'no-toolbar'
 
 getNextId = -> Collections.generateId()
 
@@ -258,6 +259,8 @@ onTableRender = ->
   $('tbody', $table).after $footer
   if settings.crudMenu == false
     $collectionTable.addClass crudMenuDisableClass
+  if settings.toolbar == false
+    $collectionTable.addClass toolbarDisableClass
   else if settings.crudMenu instanceof ReactiveVar
     @autorun => $collectionTable.toggleClass crudMenuDisableClass, !settings.crudMenu.get()
   setDomTableId domNode, @tableId
@@ -332,4 +335,3 @@ TemplateClass.helpers
   tableId: -> Template.instance().tableId
   tableSettings: -> Template.instance().settings
   showFilter: -> Template.instance().showFilter
-
